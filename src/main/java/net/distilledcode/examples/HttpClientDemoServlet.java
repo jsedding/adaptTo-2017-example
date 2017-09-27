@@ -1,17 +1,13 @@
 package net.distilledcode.examples;
 
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.osgi.services.HttpClientBuilderFactory;
 import org.apache.http.util.EntityUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -27,22 +23,8 @@ import java.util.concurrent.TimeUnit;
 )
 public class HttpClientDemoServlet extends SlingSafeMethodsServlet {
 
-    private CloseableHttpClient httpClient;
-
-    @Reference(policyOption = ReferencePolicyOption.GREEDY)
-    private HttpClientBuilderFactory httpClientBuilderFactory;
-
-    @Activate
-    private void activate() {
-        httpClient = httpClientBuilderFactory.newBuilder().build();
-    }
-
-    @Deactivate
-    private void deactivate() throws IOException {
-        if (httpClient != null) {
-            httpClient.close();
-        }
-    }
+    @Reference
+    private HttpClient httpClient;
 
     @Override
     protected void doGet(final SlingHttpServletRequest request, final SlingHttpServletResponse response)
