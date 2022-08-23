@@ -1,3 +1,8 @@
+Note: this repository has been archived and no changes will be made
+=================================
+
+------------------------------------
+
 Demo Code for adaptTo() 2017 talk
 =================================
 
